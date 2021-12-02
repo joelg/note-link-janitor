@@ -85,10 +85,20 @@ export default function updateBacklinks(
       .join("")}\n`;
   }
 
-  const newNoteContents =
-    noteContents.slice(0, insertionOffset) +
-    backlinksString +
-    noteContents.slice(oldEndOffset);
+  let newNoteContents = noteContents;
 
-  return newNoteContents;
+  if (backlinksString) {
+    let end = noteContents.slice(oldEndOffset).trim()
+
+    if (end) {
+      end = `\n${end}\n`;
+    }
+
+    newNoteContents =
+      noteContents.slice(0, insertionOffset).trimEnd() + "\n\n" +
+      backlinksString + "\n" +
+      end
+  }
+
+return newNoteContents;
 }
